@@ -1,3 +1,4 @@
+#coding=utf-8
 from proxypool.db import RedisClient
 import aiohttp
 import asyncio

@@ -1,3 +1,4 @@
+#coding=utf-8
 from proxypool.utils import get_page
 from pyquery import PyQuery as pq
 import re

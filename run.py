@@ -1,3 +1,4 @@
+#coding=utf-8
 from proxypool.schedule import Schedule
 from proxypool.api import app
 

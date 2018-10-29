@@ -1,3 +1,4 @@
+#coding=utf-8
 import redis
 from proxypool.setting import RedisHost,Redisdb,RedisPort,RedisPwd
 
