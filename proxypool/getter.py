@@ -53,65 +53,82 @@ class FreeProxyGetter(object, metaclass=ProxyMetaclass):
             # 国内高匿代理
             start_url = 'https://www.kuaidaili.com/free/inha/{}/'.format(page)
             text=get_page(start_url)
-            doc=pq(text)
-            for item in doc('#list > table > tbody > tr').items():
-                ip=item('td:nth-child(1)').text()
-                port=item('td:nth-child(2)').text()
-                if not ip or not port or '.'not in ip:
-                    #如果不存在ip或者port 跳过
-                    continue
-                result=ip+':'+port
-                yield result.replace(' ','')
+            try:
+                doc=pq(text)
+                for item in doc('#list > table > tbody > tr').items():
+                    ip=item('td:nth-child(1)').text()
+                    port=item('td:nth-child(2)').text()
+                    if not ip or not port or '.'not in ip:
+                        #如果不存在ip或者port 跳过
+                        continue
+                    result=ip+':'+port
+                    yield result.replace(' ','')
+            except:
+                return None
 
     def crawl_xicidaili(self):
         for page in range(1, 4):
             start_url = 'http://www.xicidaili.com/wt/{}'.format(page)
             text=get_page(start_url)
-            doc = pq(text)
-            for item in doc('#ip_list  > tr').items():
-                ip =item('td:nth-child(2)').text()
-                port =item('td:nth-child(3)').text()
-                if not ip or not port or '.'not in ip:
-                    #如果不存在ip或者port 跳过
-                    continue
-                result = ip + ':' + port
-                yield result.replace(' ', '')
+            try:
+                doc = pq(text)
+                for item in doc('#ip_list  > tr').items():
+                    ip =item('td:nth-child(2)').text()
+                    port =item('td:nth-child(3)').text()
+                    if not ip or not port or '.'not in ip:
+                        #如果不存在ip或者port 跳过
+                        continue
+                    result = ip + ':' + port
+                    yield result.replace(' ', '')
+            except:
+                return None
 
     def crawl_daili66(self):
         for page in range(1,4):
             start_url ='http://www.66ip.cn/{}.html'.format(page)
             text = get_page(start_url)
-            doc = pq(text)
-            for item in doc('table >  tr').items():
-                ip = item('td:nth-child(1)').text()
-                port = item('td:nth-child(2)').text()
-                if not ip or not port or '.'not in ip:
-                    # 如果不存在ip或者port 跳过,或者ip没有'.'作为判断
-                    continue
-                result = ip + ':' + port
-                yield result.replace(' ', '')
+            try:
+                doc = pq(text)
+                for item in doc('table >  tr').items():
+                    ip = item('td:nth-child(1)').text()
+                    port = item('td:nth-child(2)').text()
+                    if not ip or not port or '.'not in ip:
+                        # 如果不存在ip或者port 跳过,或者ip没有'.'作为判断
+                        continue
+                    result = ip + ':' + port
+                    yield result.replace(' ', '')
+            except:
+                return None
 
     def crawl_data5u(self):
         for i in ['gngn', 'gnpt']:
             start_url = 'http://www.data5u.com/free/{}/index.shtml'.format(i)
             text = get_page(start_url)
-            doc = pq(text)
-            for item in doc('.l2').items():
-                ip = item('span:nth-child(1) > li').text()
-                port = item('span:nth-child(2) > li').text()
-                if not ip or not port or '.' not in ip:
-                    # 如果不存在ip或者port 跳过,或者ip没有'.'作为判断
-                    continue
-                result = ip + ':' + port
-                yield result.replace(' ', '')
+            try:
+                doc = pq(text)
+                for item in doc('.l2').items():
+                    ip = item('span:nth-child(1) > li').text()
+                    port = item('span:nth-child(2) > li').text()
+                    if not ip or not port or '.' not in ip:
+                        # 如果不存在ip或者port 跳过,或者ip没有'.'作为判断
+                        continue
+                    result = ip + ':' + port
+                    yield result.replace(' ', '')
+            except:
+                return None
 
     def crawl_89ip(self):
         start_url='http://www.89ip.cn/tqdl.html?api=1&num=100&port=&address=&isp='
         text = get_page(start_url)
 
         # a=re.findall('[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}:[0-9]{1,5}',text)
-        for i in re.findall('[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}:[0-9]{1,5}',text):
-            yield i
+        try:
+            for i in re.findall('[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}:[0-9]{1,5}',text):
+                yield i
+        except:
+            return None
+
+
 
 if __name__ == '__main__':
     f=FreeProxyGetter()

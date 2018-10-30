@@ -46,7 +46,12 @@ class ValidityTester(object):
             await session.close()
 
     def check_some_proxies(self):
-        #建立循环消息圈：循环检查_raw_proxies中的代理ip
+        '''
+        建立循环消息圈：循环检查_raw_proxies中的代理ip
+        _raw_proxies 为空或者None 抛出异常
+        '''
+        if not self._raw_proxies:
+            return
         try:
             print('Check_some_proxies Ing')
             loop=asyncio.get_event_loop()
